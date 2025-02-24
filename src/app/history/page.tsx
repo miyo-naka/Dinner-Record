@@ -22,13 +22,13 @@ export default function history() {
   return (
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <Header />
-      <h2 className="text-3xl font-bold mb-8"> ごはんの記録</h2>
+      <h2 className="text-3xl font-bold my-8"> ごはんの記録</h2>
       {records.length === 0 ? (
         <p>記録がありません</p>
       ) : (
-        <table>
+        <table className="w-[60%] mb-5">
           <thead>
-            <tr>
+            <tr className="[&>th]:h-10 text-left">
               <th>日付</th>
               <th>料理名</th>
               <th>メモ</th>
@@ -38,17 +38,24 @@ export default function history() {
           </thead>
           <tbody>
             {records.map((record, index) => (
-              <tr key={index}>
+              <tr
+                key={index}
+                className="[&>td]:h-8 p-2 text-left border-t-[1px] border-t-dotted border-violet-300"
+              >
                 <td>{record.date}</td>
                 <td>{record.dishName}</td>
                 <td>{record.note}</td>
-                <td>
+                <td className="min-w-[10%]">
                   {/* <button onClick={() => handleEdit(record)}>編集</button> */}
-                  <button>編集</button>
+                  <button className="my-2 mx-1 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200">
+                    編集
+                  </button>
                 </td>
-                <td>
+                <td className="min-w-[10%]">
                   {/* <button onClick={() => handleDelete(record.id)}>削除</button> */}
-                  <button>削除</button>
+                  <button className="my-2 mx-1 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200">
+                    削除
+                  </button>
                 </td>
               </tr>
             ))}
