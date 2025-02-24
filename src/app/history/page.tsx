@@ -17,9 +17,9 @@ export default function history() {
   const [editRecord, setEditRecord] = useState<Record | null>(null);
 
   const [page, setPage] = useState(1);
-  const recordsPerPage = 3;
+  const recordsPerPage = 7;
 
-  // localStorageからデータを読み込み + ページネーション
+  // localStorageからデータを読み込み
   useEffect(() => {
     const savedRecords = localStorage.getItem("dinner_records");
     if (savedRecords) {
@@ -28,19 +28,13 @@ export default function history() {
     }
   }, []);
 
+  //ページネーション用のデータの更新
   useEffect(() => {
-    const totalPages = Math.ceil(allRecords.length / recordsPerPage);
-    if (page > totalPages) {
-      setPage(Math.max(totalPages, 1)); // データが減ったらページ番号を調整
-    }
+    setRecords(
+      allRecords.slice((page - 1) * recordsPerPage, page * recordsPerPage)
+    );
   }, [allRecords, page]);
-
   const totalPages = Math.ceil(allRecords.length / recordsPerPage);
-  const startIndex = (page - 1) * recordsPerPage;
-  const paginatedRecords = allRecords.slice(
-    startIndex,
-    startIndex + recordsPerPage
-  );
 
   //編集モーダルを開く
   const handleEdit = (record: Record) => {
@@ -51,7 +45,7 @@ export default function history() {
     const updatedAllRecords = allRecords.map((record) =>
       record.date === updatedRecord.date ? updatedRecord : record
     );
-    setRecords(updatedAllRecords);
+    setAllRecords(updatedAllRecords);
     localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
     alert("記録を更新しました");
     setEditRecord(null); // 編集モードを終了
@@ -59,9 +53,9 @@ export default function history() {
 
   //削除処理
   const handleDelete = (index: number) => {
-    const globalIndex = startIndex + index;
+    const globalIndex = (page - 1) * recordsPerPage + index;
     const updatedAllRecords = allRecords.filter((_, i) => i !== globalIndex);
-    setRecords(updatedAllRecords);
+    setAllRecords(updatedAllRecords);
     localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
     alert("記録を削除しました");
   };
@@ -70,7 +64,7 @@ export default function history() {
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <Header />
       <h2 className="text-3xl font-bold my-8"> ごはんの記録</h2>
-      {paginatedRecords.length === 0 ? (
+      {records.length === 0 ? (
         <p>記録がありません</p>
       ) : (
         <table className="w-[70%] mb-5">
@@ -84,7 +78,7 @@ export default function history() {
             </tr>
           </thead>
           <tbody>
-            {paginatedRecords.map((record, index) => (
+            {records.map((record, index) => (
               <tr
                 key={index}
                 className="[&>td]:h-8 p-4 text-left border-t-[1px] border-t-dotted border-violet-300"
