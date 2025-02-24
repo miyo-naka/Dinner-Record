@@ -82,7 +82,7 @@ export default function record() {
       </form>
       <Link href="/">
         <button className="mt-8 mx-4 py-3 px-5 rounded-2xl bg-gray-100 hover:bg-gray-200">
-          戻る
+          ホームに戻る
         </button>
       </Link>
     </div>
