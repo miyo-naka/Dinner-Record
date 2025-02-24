@@ -1,17 +1,9 @@
+import { Record } from "@/app/history/page";
+
 type EditRecordFormProps = {
-  editRecord: { date: string; dishName: string; note: string } | null;
-  setEditRecord: React.Dispatch<
-    React.SetStateAction<{
-      date: string;
-      dishName: string;
-      note: string;
-    } | null>
-  >;
-  handleUpdate: (updatedRecord: {
-    date: string;
-    dishName: string;
-    note: string;
-  }) => void;
+  editRecord: Record | null;
+  setEditRecord: React.Dispatch<React.SetStateAction<Record | null>>;
+  handleUpdate: (updatedRecord: Record) => void;
 };
 
 export default function EditRecordForm({

@@ -3,42 +3,44 @@ import Header from "@/components/Header";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import EditRecordForm from "@/components/EditRecordForm";
+import record from "../record/page";
 
-type Record = {
-  id?: number;
+export type Record = {
   date: string;
   dishName: string;
   note: string;
 };
 
 export default function history() {
-  // const [date, setDate] = useState("");
-  // const [dishName, setDishName] = useState("");
-  // const [note, setNote] = useState("");
   const [records, setRecords] = useState<Record[]>([]);
+  const [allRecords, setAllRecords] = useState<Record[]>([]);
   const [editRecord, setEditRecord] = useState<Record | null>(null);
 
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const recordsPerPage = 7;
+  const recordsPerPage = 3;
 
-  // レンダリング時にlocalStorageからデータを読み込む+ページネーション
+  // localStorageからデータを読み込み + ページネーション
   useEffect(() => {
     const savedRecords = localStorage.getItem("dinner_records");
     if (savedRecords) {
       const allRecords = JSON.parse(savedRecords);
-      const totalPageNumber = Math.ceil(allRecords.length / recordsPerPage);
-      setTotalPages(totalPageNumber);
-
-      //現在のページデータのみ読み込む
-      const startIndex = (page - 1) * recordsPerPage;
-      const paginatedRecords = allRecords.slice(
-        startIndex,
-        startIndex + recordsPerPage
-      );
-      setRecords(paginatedRecords);
+      setAllRecords(allRecords);
     }
-  }, [page]);
+  }, []);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(allRecords.length / recordsPerPage);
+    if (page > totalPages) {
+      setPage(Math.max(totalPages, 1)); // データが減ったらページ番号を調整
+    }
+  }, [allRecords, page]);
+
+  const totalPages = Math.ceil(allRecords.length / recordsPerPage);
+  const startIndex = (page - 1) * recordsPerPage;
+  const paginatedRecords = allRecords.slice(
+    startIndex,
+    startIndex + recordsPerPage
+  );
 
   //編集モーダルを開く
   const handleEdit = (record: Record) => {
@@ -46,19 +48,29 @@ export default function history() {
   };
   //更新処理
   const handleUpdate = (updatedRecord: Record) => {
-    const updatedRecords = records.map((record) =>
+    const updatedAllRecords = allRecords.map((record) =>
       record.date === updatedRecord.date ? updatedRecord : record
     );
-    setRecords(updatedRecords); // 状態を更新
-    localStorage.setItem("dinner_records", JSON.stringify(updatedRecords)); // localStorageにも保存
+    setRecords(updatedAllRecords);
+    localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
+    alert("記録を更新しました");
     setEditRecord(null); // 編集モードを終了
+  };
+
+  //削除処理
+  const handleDelete = (index: number) => {
+    const globalIndex = startIndex + index;
+    const updatedAllRecords = allRecords.filter((_, i) => i !== globalIndex);
+    setRecords(updatedAllRecords);
+    localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
+    alert("記録を削除しました");
   };
 
   return (
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <Header />
       <h2 className="text-3xl font-bold my-8"> ごはんの記録</h2>
-      {records.length === 0 ? (
+      {paginatedRecords.length === 0 ? (
         <p>記録がありません</p>
       ) : (
         <table className="w-[70%] mb-5">
@@ -72,7 +84,7 @@ export default function history() {
             </tr>
           </thead>
           <tbody>
-            {records.map((record, index) => (
+            {paginatedRecords.map((record, index) => (
               <tr
                 key={index}
                 className="[&>td]:h-8 p-4 text-left border-t-[1px] border-t-dotted border-violet-300"
@@ -81,7 +93,6 @@ export default function history() {
                 <td>{record.dishName}</td>
                 <td>{record.note}</td>
                 <td className="min-w-[10%]">
-                  {/* <button onClick={() => handleEdit(record)}>編集</button> */}
                   <button
                     onClick={() => handleEdit(record)}
                     className="my-2 mx-1 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
@@ -90,8 +101,10 @@ export default function history() {
                   </button>
                 </td>
                 <td className="min-w-[10%]">
-                  {/* <button onClick={() => handleDelete(record.id)}>削除</button> */}
-                  <button className="my-2 mx-1 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200">
+                  <button
+                    onClick={() => handleDelete(index)}
+                    className="my-2 mx-1 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
+                  >
                     削除
                   </button>
                 </td>
