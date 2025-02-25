@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
-      <h1 className="text-5xl font-bold tracking-wide">
+      <h1>
         わたしのごはん
         <img src="わたしのごはんロゴ.png" className="h-[50px] inline" />
       </h1>

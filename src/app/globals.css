@@ -19,3 +19,24 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+h1 {
+  font-size: 48px;
+  font-weight: bold;
+  letter-spacing: 0.025em;
+}
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 36px;
+  }
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: bold;
+}
+@media screen and (max-width: 768px) {
+  h2 {
+    font-size: 24px;
+  }
+}

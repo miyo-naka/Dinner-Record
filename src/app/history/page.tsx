@@ -54,22 +54,29 @@ export default function history() {
   //削除処理
   const handleDelete = (index: number) => {
     const globalIndex = (page - 1) * recordsPerPage + index;
+
+    const isConfirmed = confirm(
+      `削除してもいいですか？料理名：${allRecords[globalIndex].dishName}`
+    );
+    if (!isConfirmed) return;
+
     const updatedAllRecords = allRecords.filter((_, i) => i !== globalIndex);
     setAllRecords(updatedAllRecords);
     localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
+
     alert("記録を削除しました");
   };
 
   return (
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <Header />
-      <h2 className="text-3xl font-bold my-8"> ごはんの記録</h2>
+      <h2 className="mt-20 my-8"> ごはんの記録</h2>
       {records.length === 0 ? (
         <p>記録がありません</p>
       ) : (
-        <table className="w-[70%] mb-5">
+        <table className="w-[95%] sm:w-[70%] mb-5">
           <thead>
-            <tr className="[&>th]:h-10 text-left">
+            <tr className="[&>th]:sm:h-10 text-left">
               <th>日付</th>
               <th>料理名</th>
               <th>メモ</th>
@@ -81,7 +88,7 @@ export default function history() {
             {records.map((record, index) => (
               <tr
                 key={index}
-                className="[&>td]:h-8 p-4 text-left border-t-[1px] border-t-dotted border-violet-300"
+                className="text-sm sm:text-base [&>td]:sm:h-8 p-4 text-left border-t-[1px] border-t-dotted border-violet-300"
               >
                 <td>{record.date}</td>
                 <td>{record.dishName}</td>
@@ -89,7 +96,7 @@ export default function history() {
                 <td className="min-w-[10%]">
                   <button
                     onClick={() => handleEdit(record)}
-                    className="my-2 mx-1 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
+                    className="m-1 sm:my-2 p-1 sm:p-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
                   >
                     編集
                   </button>
@@ -97,7 +104,7 @@ export default function history() {
                 <td className="min-w-[10%]">
                   <button
                     onClick={() => handleDelete(index)}
-                    className="my-2 mx-1 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
+                    className="m-1 sm:my-2 p-1 sm:p-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
                   >
                     削除
                   </button>
