@@ -1,4 +1,4 @@
-import { Record } from "@/app/history/page";
+import { Record } from "@/utils/recordUtils";
 
 type EditRecordFormProps = {
   editRecord: Record | null;

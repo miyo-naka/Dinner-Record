@@ -3,13 +3,7 @@ import Header from "@/components/Header";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import EditRecordForm from "@/components/EditRecordForm";
-import record from "../record/page";
-
-export type Record = {
-  date: string;
-  dishName: string;
-  note: string;
-};
+import { Record } from "@/utils/recordUtils";
 
 export default function history() {
   const [records, setRecords] = useState<Record[]>([]);
