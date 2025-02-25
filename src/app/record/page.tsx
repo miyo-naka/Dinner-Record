@@ -1,23 +1,13 @@
 "use client";
 import Header from "@/components/Header";
+import { createRecord } from "@/utils/recordUtils";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export default function record() {
   const [date, setDate] = useState("");
   const [dishName, setDishName] = useState("");
   const [note, setNote] = useState("");
-  const [records, setRecords] = useState<
-    { date: string; dishName: string; note: string }[]
-  >([]);
-
-  // 初回レンダリング時に localStorage からデータを読み込む
-  useEffect(() => {
-    const savedRecords = localStorage.getItem("dinner_records");
-    if (savedRecords) {
-      setRecords(JSON.parse(savedRecords));
-    }
-  }, []);
 
   // フォーム送信時の処理
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,18 +16,15 @@ export default function record() {
     if (!date || !dishName) {
       alert("日付と料理名は必須です");
       return;
+    } else {
+      const newRecord = { date, dishName, note };
+      createRecord(newRecord);
+
+      setDate("");
+      setDishName("");
+      setNote("");
+      alert("ごはんを記録しました");
     }
-
-    const newRecord = { date, dishName, note };
-    const updatedRecords = [...records, newRecord];
-
-    localStorage.setItem("dinner_records", JSON.stringify(updatedRecords));
-    setRecords(updatedRecords);
-
-    setDate("");
-    setDishName("");
-    setNote("");
-    alert("ごはんを記録しました");
   };
 
   return (

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import EditRecordForm from "@/components/EditRecordForm";
 import {
   deleteRecord,
-  loadRecord,
+  loadRecords,
   Record,
   updateRecord,
 } from "@/utils/recordUtils";
@@ -18,9 +18,9 @@ export default function history() {
   const [page, setPage] = useState(1);
   const recordsPerPage = 7;
 
-  // localStorageからデータを読み込み
+  //データの取得
   useEffect(() => {
-    setAllRecords(loadRecord());
+    setAllRecords(loadRecords());
   }, []);
 
   //ページネーション用のデータの更新

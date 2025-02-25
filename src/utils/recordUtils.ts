@@ -5,9 +5,15 @@ export type Record = {
 };
 
 //登録処理(Create)
+export function createRecord(newRecord: Record) {
+  const records = loadRecords();
+  const updatedRecords = [...records, newRecord];
+  localStorage.setItem("dinner_records", JSON.stringify(updatedRecords));
+  return updatedRecords;
+}
 
 //データ取得(Read)
-export function loadRecord() {
+export function loadRecords() {
   const savedRecords = localStorage.getItem("dinner_records");
   if (savedRecords) {
     const allRecords = JSON.parse(savedRecords);
