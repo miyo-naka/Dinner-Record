@@ -54,9 +54,16 @@ export default function history() {
   //削除処理
   const handleDelete = (index: number) => {
     const globalIndex = (page - 1) * recordsPerPage + index;
+
+    const isConfirmed = confirm(
+      `削除してもいいですか？料理名：${allRecords[globalIndex].dishName}`
+    );
+    if (!isConfirmed) return;
+
     const updatedAllRecords = allRecords.filter((_, i) => i !== globalIndex);
     setAllRecords(updatedAllRecords);
     localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
+
     alert("記録を削除しました");
   };
 
