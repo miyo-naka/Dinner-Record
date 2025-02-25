@@ -22,7 +22,7 @@ export default function EditRecordForm({
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-10">
-      <div className="bg-white p-[20px] rounded-2xl min-w-[400px] max-w-[90%] text-center">
+      <div className="bg-white p-[20px] rounded-2xl min-w-[360px] max-w-[90%] text-center">
         <h3 className="my-6 text-lg font-bold">ごはんの記録の編集</h3>
         <form onSubmit={handleEditSubmit} className="flex flex-col w-full">
           <label className="flex justify-between items-center gap-4 my-1">
