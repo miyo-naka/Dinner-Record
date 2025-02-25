@@ -44,33 +44,33 @@ export default function record() {
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <Header />
       <h2 className="text-3xl font-bold mb-8"> ごはんを記録する</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col">
-        <label className="flex items-center gap-4 my-1">
+      <form onSubmit={handleSubmit} className="flex flex-col max-w-[500px]">
+        <label className="flex justify-between items-center gap-4 my-1">
           日付
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
-            className="ml-4 p-2 border rounded-lg"
+            className="ml-4 p-2 border rounded-lg  w-3/4"
           />
         </label>
-        <label className="flex items-center gap-4 my-1">
+        <label className="flex justify-between items-center gap-4 my-1">
           料理名
           <input
             type="text"
             value={dishName}
             onChange={(e) => setDishName(e.target.value)}
             required
-            className="p-2 border rounded-lg"
+            className="p-2 border rounded-lg  w-3/4"
           />
         </label>
-        <label className="flex items-center gap-4 my-1">
+        <label className="flex justify-between items-center gap-4 my-1">
           メモ
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            className="p-2 border rounded-lg"
+            className="p-2 border rounded-lg  w-3/4"
           />
         </label>
         <button
