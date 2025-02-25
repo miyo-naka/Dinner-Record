@@ -3,7 +3,12 @@ import Header from "@/components/Header";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import EditRecordForm from "@/components/EditRecordForm";
-import { Record } from "@/utils/recordUtils";
+import {
+  deleteRecord,
+  loadRecord,
+  Record,
+  updateRecord,
+} from "@/utils/recordUtils";
 
 export default function history() {
   const [records, setRecords] = useState<Record[]>([]);
@@ -15,11 +20,7 @@ export default function history() {
 
   // localStorageからデータを読み込み
   useEffect(() => {
-    const savedRecords = localStorage.getItem("dinner_records");
-    if (savedRecords) {
-      const allRecords = JSON.parse(savedRecords);
-      setAllRecords(allRecords);
-    }
+    setAllRecords(loadRecord());
   }, []);
 
   //ページネーション用のデータの更新
@@ -36,11 +37,7 @@ export default function history() {
   };
   //更新処理
   const handleUpdate = (updatedRecord: Record) => {
-    const updatedAllRecords = allRecords.map((record) =>
-      record.date === updatedRecord.date ? updatedRecord : record
-    );
-    setAllRecords(updatedAllRecords);
-    localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
+    setAllRecords(updateRecord(allRecords, updatedRecord));
     alert("記録を更新しました");
     setEditRecord(null); // 編集モードを終了
   };
@@ -48,17 +45,15 @@ export default function history() {
   //削除処理
   const handleDelete = (index: number) => {
     const globalIndex = (page - 1) * recordsPerPage + index;
-
     const isConfirmed = confirm(
       `削除してもいいですか？料理名：${allRecords[globalIndex].dishName}`
     );
-    if (!isConfirmed) return;
-
-    const updatedAllRecords = allRecords.filter((_, i) => i !== globalIndex);
-    setAllRecords(updatedAllRecords);
-    localStorage.setItem("dinner_records", JSON.stringify(updatedAllRecords));
-
-    alert("記録を削除しました");
+    if (!isConfirmed) {
+      return;
+    } else {
+      setAllRecords(deleteRecord(allRecords, globalIndex));
+      alert("記録を削除しました");
+    }
   };
 
   return (
