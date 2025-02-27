@@ -3,12 +3,15 @@
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/app/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function LogoutButton() {
   const { user } = useAuth();
+  const router = useRouter();
 
   const handleLogout = async () => {
     await signOut(auth);
+    router.push("/auth/login");
   };
 
   return user ? (
