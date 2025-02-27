@@ -14,11 +14,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       if (user) {
-        //ログイン時にトークンを取得してクッキーにセット
         const token = await user.getIdToken();
-        setCookie("__session", token);
+        setCookie("__session", token); //login時にtokenを取得してCookieにセット
       } else {
-        deleteCookie("__session");
+        deleteCookie("__session"); // Logout時にCookieを削除
       }
     });
     return () => unsubscribe();
