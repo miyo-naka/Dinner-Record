@@ -11,5 +11,12 @@ export default function LogoutButton() {
     await signOut(auth);
   };
 
-  return user ? <button onClick={handleLogout}>ログアウト</button> : null;
+  return user ? (
+    <button
+      onClick={handleLogout}
+      className="absolute top-0 right-0 m-3 p-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
+    >
+      ログアウト
+    </button>
+  ) : null;
 }
