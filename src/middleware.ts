@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { auth } from "./lib/firebaseAdmin";
+import { auth } from "@/lib/firebaseAdmin";
 
 export async function middleware(req: NextRequest) {
   const protectedRoutes = ["/", "/history", "/record"]; //ログインが必要なページ
