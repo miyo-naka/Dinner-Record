@@ -46,37 +46,36 @@ export default function Login() {
   return (
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <h2>ログイン</h2>
-      <div>
-        <form onSubmit={handleSubmit} className="flex flex-col md:w-1/3 mt-8">
-          <label className="flex justify-between items-center my-1 ">
-            E-mail
-            <input
-              type="email"
-              placeholder="E-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="ml-4 p-2 border rounded-lg  w-3/4"
-            />
-          </label>
-          <label className="flex justify-between items-center my-1">
-            Password
-            <input
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="ml-4 p-2 border rounded-lg  w-3/4"
-            />
-          </label>
-          <button
-            type="submit"
-            className="w-4/5 m-4 p-4 rounded-2xl bg-gray-100 hover:bg-gray-200"
-          >
-            ログイン
-          </button>
-        </form>
-        {error && <p>{error}</p>}
-      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col md:w-1/3 mt-8">
+        <label className="flex justify-between items-center my-1 ">
+          E-mail
+          <input
+            type="email"
+            placeholder="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="ml-4 p-2 border rounded-lg  w-3/4"
+          />
+        </label>
+        <label className="flex justify-between items-center my-1">
+          Password
+          <input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="ml-4 p-2 border rounded-lg  w-3/4"
+          />
+        </label>
+        <button
+          type="submit"
+          className="w-4/5 m-4 p-4 rounded-2xl bg-gray-100 hover:bg-gray-200"
+        >
+          ログイン
+        </button>
+      </form>
+      {error && <p>{error}</p>}
+
       <p className="mt-8">
         アカウントをお持ちでない場合
         <Link
