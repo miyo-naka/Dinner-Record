@@ -5,19 +5,14 @@ export default function LogoutButton() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const token = document.cookie.replace("__session=", ""); // クッキーからトークンを取得
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
 
-    await fetch("/api/auth/logout", {
-      // サーバーサイドにログアウトリクエストを送信
-      method: "POST",
-      body: JSON.stringify({ token }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    document.cookie =
-      "__session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
-
-    router.push("/auth/login"); // ログインページにリダイレクト
+      router.refresh();
+      router.push("/auth/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   return (
