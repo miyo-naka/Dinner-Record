@@ -1,23 +1,30 @@
 import { NextResponse, NextRequest } from "next/server";
 import { auth } from "@/lib/firebaseAdmin";
-// import admin from "firebase-admin";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json();
-    // Firebase の管理者 SDK でカスタムトークンを発行
-    const userRecord = await auth.getUserByEmail(email);
-    const customToken = await auth.createCustomToken(userRecord.uid);
-    return NextResponse.json({ token: customToken });
+    const { idToken } = await req.json(); // クライアントから idToken を受け取る
+    if (!idToken) {
+      return NextResponse.json(
+        { error: "IDトークンが必要です" },
+        { status: 400 }
+      );
+    }
 
-    // const { idToken } = await req.json(); //Firebase IDトークンを取得
-    // console.log("Received token:", idToken);
-    // if (!idToken) {
-    //   throw new Error("No ID token provided");
-    // }
-    // const decodedToken = await auth.verifyIdToken(idToken);
-    // console.log("Decoded token:", decodedToken);
-    // return NextResponse.json({ user: decodedToken });
+    // IDトークンを検証し、セッションクッキーを作成
+    const decodedToken = await auth.verifyIdToken(idToken);
+    const sessionCookie = await auth.createSessionCookie(idToken, {
+      expiresIn: 60 * 60 * 24 * 5 * 1000,
+    }); // 5日間
+
+    const response = NextResponse.json({ success: true });
+    response.cookies.set("__session", sessionCookie, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+    });
+
+    return response;
   } catch (error: any) {
     console.error("Login error:", error.message);
     return NextResponse.json(

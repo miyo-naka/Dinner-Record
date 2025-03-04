@@ -1,65 +1,42 @@
 "use client";
 import { useState } from "react";
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebaseClient";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submit initiated");
 
     try {
+      // Firebase クライアントでログインし、idToken を取得
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const idToken = await userCredential.user.getIdToken();
+
+      // IDトークンをサーバーに送信し、セッションを作成
       const res = await fetch("/api/auth/login", {
         method: "POST",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ idToken }),
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log("Server response:", res);
-      const data = await res.json();
-      console.log("Response data:", data);
-
-      if (!res.ok || !data.token) {
-        throw new Error("Authentication failed");
+      if (!res.ok) {
+        throw new Error("Authentication failed"); //debag
       }
-      // 受け取ったカスタムトークンを Cookie に保存
-      document.cookie = `__session=${data.token}; path=/;`;
-      console.log("Token saved in cookie");
-
-      // const auth = getAuth();
-      // console.log("Auth initialized:", auth);
-      // const userCredential = await signInWithEmailAndPassword(
-      //   auth,
-      //   email,
-      //   password
-      // );
-      // console.log("User credential:", userCredential);
-      // const user = userCredential.user;
-      // console.log("User:", user);
-      // const token = await user.getIdToken();
-      // console.log("Token:", token);
-
-      // サーバーにIDトークンを送信
-      // const res = await fetch("/api/auth/verify", {
-      //   method: "POST",
-      //   body: JSON.stringify({ idToken: token }),
-      //   headers: { "Content-Type": "application/json" },
-      // });
-      // console.log("Server response:", res);
-      // if (!res.ok) {
-      //   throw new Error("Authentication failed");
-      // }
-
-      // トークンをCookieに保存
-      // document.cookie = `__session=${token}; path=/;`;
-      // console.log("Token saved in cookie");
 
       // ログイン成功後の処理
-      window.location.href = "/"; // ダッシュボードにリダイレクト
+      router.push("/");
+      // window.location.href = "/"; // ダッシュボードにリダイレクト
     } catch (error: any) {
       console.error("Login error:", error.message);
       setError("ログインに失敗しました");

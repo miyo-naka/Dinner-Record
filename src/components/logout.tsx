@@ -5,9 +5,10 @@ export default function LogoutButton() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const token = document.cookie.replace("__session=", "");
+    const token = document.cookie.replace("__session=", ""); // クッキーからトークンを取得
 
     await fetch("/api/auth/logout", {
+      // サーバーサイドにログアウトリクエストを送信
       method: "POST",
       body: JSON.stringify({ token }),
       headers: { "Content-Type": "application/json" },
