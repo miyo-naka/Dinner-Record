@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -16,6 +15,7 @@ export default function Register() {
     setError("");
 
     try {
+      const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("ユーザー登録成功", Credential);
       router.push("/auth/thanks"); // 登録成功後の遷移ページ
