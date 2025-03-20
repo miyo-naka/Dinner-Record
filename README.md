@@ -40,7 +40,7 @@ https://github.com/miyo-naka/Dinner-Record
   <br><br>
 
 ## 使用技術(実行環境)
-
+- next.js 15.1.7
 - react 19.0.0
 - tailwindcss 3.4.1
 - firebase 11.3.1
