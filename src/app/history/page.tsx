@@ -18,9 +18,18 @@ export default function history() {
   const [page, setPage] = useState(1);
   const recordsPerPage = 7;
 
-  //データの取得
+  //データの取得(local)
+  // useEffect(() => {
+  //   setAllRecords(loadRecords());
+  // }, []);
+
+  //データの取得(Firebase)
   useEffect(() => {
-    setAllRecords(loadRecords());
+    const fetchRecords = async () => {
+      const data = await loadRecords();
+      setAllRecords(data);
+    };
+    fetchRecords();
   }, []);
 
   //ページネーション用のデータの更新
@@ -35,24 +44,59 @@ export default function history() {
   const handleEdit = (record: Record) => {
     setEditRecord(record);
   };
-  //更新処理
-  const handleUpdate = (updatedRecord: Record) => {
-    setAllRecords(updateRecord(allRecords, updatedRecord));
-    alert("記録を更新しました");
-    setEditRecord(null); // 編集モードを終了
+  //更新処理(local)
+  // const handleUpdate = (updatedRecord: Record) => {
+  //   setAllRecords(updateRecord(allRecords, updatedRecord));
+  //   alert("記録を更新しました");
+  //   setEditRecord(null); // 編集モードを終了
+  // };
+
+  //更新処理(Firebase)
+  const handleUpdate = async (updatedRecord: Record) => {
+    try {
+      await updateRecord(updatedRecord);
+      alert("記録を更新しました");
+      setEditRecord(null);
+      const data = await loadRecords();
+      setAllRecords(data);
+    } catch (error) {
+      console.error("更新エラー:", error);
+    }
   };
 
-  //削除処理
-  const handleDelete = (index: number) => {
+  //削除処理(local)
+  // const handleDelete = (index: number) => {
+  //   const globalIndex = (page - 1) * recordsPerPage + index;
+  //   const recordToDelete = allRecords[globalIndex];
+  //   const isConfirmed = confirm(
+  //     `削除してもいいですか？料理名：${recordToDelete.dishName}`
+  //   );
+  //   if (!isConfirmed) {
+  //     return;
+  //   } else {
+  //     setAllRecords(deleteRecord(allRecords, globalIndex));
+  //     alert("記録を削除しました");
+  //   }
+  // };
+
+  //削除処理(Firebase)
+  const handleDelete = async (index: number) => {
     const globalIndex = (page - 1) * recordsPerPage + index;
+    const recordToDelete = allRecords[globalIndex];
+    if (!recordToDelete.id) return;
     const isConfirmed = confirm(
-      `削除してもいいですか？料理名：${allRecords[globalIndex].dishName}`
+      `削除してもいいですか？料理名：${recordToDelete.dishName}`
     );
-    if (!isConfirmed) {
-      return;
-    } else {
-      setAllRecords(deleteRecord(allRecords, globalIndex));
-      alert("記録を削除しました");
+    if (!isConfirmed) return;
+    else {
+      try {
+        await deleteRecord(recordToDelete.id);
+        alert("記録を削除しました");
+        const data = await loadRecords();
+        setAllRecords(data);
+      } catch (error) {
+        console.error("削除エラー:", error);
+      }
     }
   };
 
