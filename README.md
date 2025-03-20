@@ -1,4 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# わたしのごはん
+
+## ごはんの記録をするだけのシンプルなアプリ
+
+＜ログイン／新規登録ページ＞<br>
+ログインしていない状態ではログイン画面に遷移します
+<kbd><img src="https://github.com/user-attachments/assets/b4dcce3e-3b0b-4fc2-a108-ff58fc776fd0" width=60%></kbd><br><br>
+
+＜トップページ＞<br>
+「記録する」または「今までのごはん」のボタン
+<kbd><img src="https://github.com/user-attachments/assets/b4dcce3e-3b0b-4fc2-a108-ff58fc776fd0" width=60%></kbd><br><br>
+
+＜記録ページ＞<br>
+日付、料理名、メモを記入して記録するページ
+<kbd><img src="https://github.com/user-attachments/assets/3e9357ed-63b6-4727-8442-66059a64bacc" width=60%></kbd><br><br>
+
+＜今までのごはん＞<br>
+記録したごはんを日付順で一覧表示
+編集・削除が可能
+<kbd><img src="https://github.com/user-attachments/assets/e6ae05f0-da63-41d5-a256-3a9380c670bb" width=60%></kbd><br><br><kbd><img src="https://github.com/user-attachments/assets/909bb968-eaa3-419a-9496-9c0cd0cce0c2" width=60%></kbd><br><br>
+
+## URL
+
+- 本番環境：
+- 開発環境：http://localhost:3000
+  <br><br>
+
+## 関連レポジトリ
+
+https://github.com/miyo-naka/Dinner-Record
+<br><br>
+
+## 機能一覧
+
+- ログイン・ユーザー登録
+- 記録作成
+- 記録一覧表示
+- 記録編集
+- 記録削除
+  <br><br>
+
+## 使用技術(実行環境)
+
+- react 19.0.0
+- tailwindcss 3.4.1
+- firebase 11.3.1
+  <br><br>
 
 ## Getting Started
 
@@ -8,29 +54,4 @@ First, run the development server:
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
