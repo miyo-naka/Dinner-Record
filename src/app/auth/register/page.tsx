@@ -17,7 +17,7 @@ export default function Register() {
     try {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
-      console.log("ユーザー登録成功", Credential);
+      // console.log("ユーザー登録成功", Credential);
       router.push("/auth/thanks"); // 登録成功後の遷移ページ
     } catch (err: any) {
       console.error("登録に失敗しました：", err.message);

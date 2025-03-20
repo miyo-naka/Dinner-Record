@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     // セッションクッキーの検証
     const decodedToken = await auth.verifySessionCookie(sessionCookie, true);
-    console.log("Verified token:", decodedToken);
+    // console.log("Verified token:", decodedToken);
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
