@@ -103,25 +103,30 @@ export default function history() {
           </tbody>
         </table>
       )}
-      <div>
-        <button
-          hidden={page === 1}
-          onClick={() => setPage(page - 1)}
-          className="my-2 mx-3 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
-        >
-          Prev
-        </button>
-        <span>
-          {page} / {totalPages} ページ
-        </span>
-        <button
-          hidden={page === totalPages}
-          onClick={() => setPage(page + 1)}
-          className="my-2 mx-3 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
-        >
-          Next
-        </button>
-      </div>
+
+      {/* ページネーション */}
+      {totalPages > 1 && (
+        <div>
+          <button
+            hidden={page === 1}
+            onClick={() => setPage(page - 1)}
+            className="my-2 mx-3 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
+          >
+            Prev
+          </button>
+          <span>
+            {page} / {totalPages} ページ
+          </span>
+          <button
+            hidden={page === totalPages}
+            onClick={() => setPage(page + 1)}
+            className="my-2 mx-3 py-3 px-3 rounded-2xl bg-gray-100 hover:bg-gray-200"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
       <Link href="/">
         <button className="mt-8 mx-4 py-3 px-5 rounded-2xl bg-gray-100 hover:bg-gray-200">
           ホームに戻る

@@ -18,6 +18,8 @@ export function loadRecords() {
   if (savedRecords) {
     const allRecords = JSON.parse(savedRecords);
     return allRecords;
+  } else {
+    return [];
   }
 }
 
