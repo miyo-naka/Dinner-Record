@@ -4,24 +4,24 @@
 
 ＜ログイン／新規登録ページ＞<br>
 ログインしていない状態ではログイン画面に遷移します
-<kbd><img src="https://github.com/user-attachments/assets/b4dcce3e-3b0b-4fc2-a108-ff58fc776fd0" width=60%></kbd><br><br>
+<kbd><img src="https://github.com/user-attachments/assets/f7c0b019-ad89-4ba3-8505-1952dae1d08b" width=60%></kbd><br><br>
 
 ＜トップページ＞<br>
 「記録する」または「今までのごはん」のボタン
-<kbd><img src="https://github.com/user-attachments/assets/b4dcce3e-3b0b-4fc2-a108-ff58fc776fd0" width=60%></kbd><br><br>
+<kbd><img src="https://github.com/user-attachments/assets/8830dfce-c834-4e9d-ad0d-31b5f00b39b6" width=60%></kbd><br><br>
 
 ＜記録ページ＞<br>
 日付、料理名、メモを記入して記録するページ
-<kbd><img src="https://github.com/user-attachments/assets/3e9357ed-63b6-4727-8442-66059a64bacc" width=60%></kbd><br><br>
+<kbd><img src="https://github.com/user-attachments/assets/b71a76c1-2660-4881-a838-017d6b2dcfa3" width=60%></kbd><br><br>
 
 ＜今までのごはん＞<br>
 記録したごはんを日付順で一覧表示
 編集・削除が可能
-<kbd><img src="https://github.com/user-attachments/assets/e6ae05f0-da63-41d5-a256-3a9380c670bb" width=60%></kbd><br><br><kbd><img src="https://github.com/user-attachments/assets/909bb968-eaa3-419a-9496-9c0cd0cce0c2" width=60%></kbd><br><br>
+<kbd><img src="https://github.com/user-attachments/assets/85c24938-7970-4eca-a76a-b5e8ae11f0bd" width=60%></kbd><br><br><kbd><img src="https://github.com/user-attachments/assets/909bb968-eaa3-419a-9496-9c0cd0cce0c2" width=60%></kbd><br><br>
 
 ## URL
 
-- 本番環境：
+- 本番環境：https://dinner-record.vercel.app/
 - 開発環境：http://localhost:3000
   <br><br>
 
@@ -47,11 +47,7 @@ https://github.com/miyo-naka/Dinner-Record
   <br><br>
 
 ## Getting Started
-
-First, run the development server:
-
+サーバーの起動:
 ```bash
 npm run dev
-# or
-yarn dev
 ```
