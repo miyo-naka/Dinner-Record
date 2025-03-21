@@ -10,7 +10,7 @@ if (!admin.apps.length) {
     ),
   };
   admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-  console.log("Firebase Admin SDK 初期化成功");
+  // console.log("Firebase Admin SDK 初期化成功");
 }
 
 export const auth = admin.auth();

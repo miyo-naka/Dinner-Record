@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const sessionCookie = req.cookies.get("__session")?.value;
 
-  console.log("Received sessionCookie:", sessionCookie); //デバッグ
+  // console.log("Received sessionCookie:", sessionCookie); //デバッグ
 
   //認証必須ページ & 未ログインなら `/auth/login` にリダイレクト
   if (protectedRoutes.includes(pathname)) {
