@@ -14,6 +14,7 @@ export default function history() {
   const [records, setRecords] = useState<Record[]>([]);
   const [allRecords, setAllRecords] = useState<Record[]>([]);
   const [editRecord, setEditRecord] = useState<Record | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [page, setPage] = useState(1);
   const recordsPerPage = 7;
@@ -26,8 +27,10 @@ export default function history() {
   //データの取得(Firebase)
   useEffect(() => {
     const fetchRecords = async () => {
+      setIsLoading(true);
       const data = await loadRecords();
       setAllRecords(data);
+      setIsLoading(false);
     };
     fetchRecords();
   }, []);
@@ -104,7 +107,9 @@ export default function history() {
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <Header />
       <h2 className="mt-20 my-8"> ごはんの記録</h2>
-      {records.length === 0 ? (
+      {isLoading ? (
+        <p>読み込み中…</p>
+      ) : records.length === 0 ? (
         <p>記録がありません</p>
       ) : (
         <table className="w-[95%] sm:w-[70%] mb-5">
