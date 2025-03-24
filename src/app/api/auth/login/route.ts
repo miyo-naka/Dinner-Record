@@ -14,8 +14,8 @@ export async function POST(req: NextRequest) {
     // IDトークンを検証し、セッションクッキーを作成
     const decodedToken = await auth.verifyIdToken(idToken);
     const sessionCookie = await auth.createSessionCookie(idToken, {
-      expiresIn: 60 * 60 * 24 * 5 * 1000,
-    }); // 5日間
+      expiresIn: 60 * 60 * 24 * 1000,
+    }); // 1日間
 
     const response = NextResponse.json({ success: true });
     response.cookies.set("__session", sessionCookie, {
