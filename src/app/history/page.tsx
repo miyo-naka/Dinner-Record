@@ -15,25 +15,35 @@ export default function history() {
   const [allRecords, setAllRecords] = useState<Record[]>([]);
   const [editRecord, setEditRecord] = useState<Record | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const [page, setPage] = useState(1);
   const recordsPerPage = 7;
-
-  //データの取得(local)
-  // useEffect(() => {
-  //   setAllRecords(loadRecords());
-  // }, []);
 
   //データの取得(Firebase)
   useEffect(() => {
     const fetchRecords = async () => {
       setIsLoading(true);
       const data = await loadRecords();
-      setAllRecords(data);
+      setAllRecords(sortRecords(data, sortOrder));
       setIsLoading(false);
     };
     fetchRecords();
-  }, []);
+  }, [sortOrder]);
+
+  // データを日付順に並べ替える関数
+  const sortRecords = (records: any[], order: "asc" | "desc") => {
+    return [...records].sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return order === "asc" ? dateA - dateB : dateB - dateA;
+    });
+  };
+
+  // 並び順を変更する関数
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
 
   //ページネーション用のデータの更新
   useEffect(() => {
@@ -47,12 +57,6 @@ export default function history() {
   const handleEdit = (record: Record) => {
     setEditRecord(record);
   };
-  //更新処理(local)
-  // const handleUpdate = (updatedRecord: Record) => {
-  //   setAllRecords(updateRecord(allRecords, updatedRecord));
-  //   alert("記録を更新しました");
-  //   setEditRecord(null); // 編集モードを終了
-  // };
 
   //更新処理(Firebase)
   const handleUpdate = async (updatedRecord: Record) => {
@@ -66,21 +70,6 @@ export default function history() {
       console.error("更新エラー:", error);
     }
   };
-
-  //削除処理(local)
-  // const handleDelete = (index: number) => {
-  //   const globalIndex = (page - 1) * recordsPerPage + index;
-  //   const recordToDelete = allRecords[globalIndex];
-  //   const isConfirmed = confirm(
-  //     `削除してもいいですか？料理名：${recordToDelete.dishName}`
-  //   );
-  //   if (!isConfirmed) {
-  //     return;
-  //   } else {
-  //     setAllRecords(deleteRecord(allRecords, globalIndex));
-  //     alert("記録を削除しました");
-  //   }
-  // };
 
   //削除処理(Firebase)
   const handleDelete = async (index: number) => {
@@ -115,7 +104,12 @@ export default function history() {
         <table className="w-[95%] sm:w-[70%] mb-5">
           <thead>
             <tr className="[&>th]:sm:h-10 text-left">
-              <th>日付</th>
+              <th>
+                日付
+                <button onClick={toggleSortOrder}>
+                  {sortOrder === "asc" ? "　▲" : "　▼"}
+                </button>
+              </th>
               <th>料理名</th>
               <th>メモ</th>
               <th></th>
