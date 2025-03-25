@@ -24,9 +24,13 @@ export async function loadRecords() {
   try {
     const res = await fetch("api/records");
     if (!res.ok) throw new Error("unsuccesful to get data");
-    return await res.json();
+    const records = await res.json();
+    return records.map((doc: any) => ({
+      id: doc.id,
+      ...doc,
+    }));
   } catch (error) {
-    console.error(error);
+    console.error("エラー：", error);
     return [];
   }
 }
@@ -39,7 +43,7 @@ export async function updateRecord(updatedRecord: Record) {
     await fetch("/api/records", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updateRecord),
+      body: JSON.stringify(updatedRecord),
     });
   } catch (error) {
     console.error(error);
@@ -53,7 +57,7 @@ export async function deleteRecord(recordId: string) {
     await fetch("/api/records", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updateRecord),
+      body: JSON.stringify({ id: recordId }),
     });
   } catch (error) {
     console.error(error);

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth, db } from "@/lib/firebaseAdmin";
 
+//データ取得
 export async function GET(req: NextRequest) {
   try {
     const sessionCookie = req.cookies.get("__session")?.value;
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
+//データ登録
 export async function POST(req: NextRequest) {
   try {
     const sessionCookie = req.cookies.get("__session")?.value;
@@ -59,6 +61,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
+//データ更新
 export async function PUT(req: NextRequest) {
   try {
     const sessionCookie = req.cookies.get("__session")?.value;
@@ -94,6 +97,7 @@ export async function PUT(req: NextRequest) {
   }
 }
 
+//データ削除
 export async function DELETE(req: NextRequest) {
   try {
     const sessionCookie = req.cookies.get("__session")?.value;
