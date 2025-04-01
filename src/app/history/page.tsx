@@ -168,7 +168,7 @@ export default function history() {
           </tbody>
         </table>
           ) : (
-          <div className="w-full sm:w-[70%]">
+          <div className="w-full min-w-[300px] sm:w-[70%]">
             <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
@@ -176,10 +176,11 @@ export default function history() {
             headerToolbar={{
               left: "prev,next today",
               center: "title",
-              right: "dayGridMonth,timeGridWeek",
+              right: "",
             }}
+            aspectRatio={window.innerWidth > 640 ? 1.35 : 0.8}
             eventContent={(eventInfo) => (
-              <div className="text-sm bg-blue-100 text-blue-800 rounded p-1">
+              <div className="text-[10px] sm:text-sm break-words whitespace-normal bg-blue-100 text-blue-800 rounded p-1 w-full">
                 {eventInfo.event.title}
               </div>
             )}
