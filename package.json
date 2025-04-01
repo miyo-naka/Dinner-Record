@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
     "cookies-next": "^5.1.0",
     "firebase": "^11.3.1",
     "firebase-admin": "^13.1.0",
-    "next": "15.1.7",
+    "next": "^15.2.4",
     "process": "^0.11.10",
     "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {

@@ -9,16 +9,30 @@ import {
   Record,
   updateRecord,
 } from "@/utils/recordUtils";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
 export default function history() {
   const [records, setRecords] = useState<Record[]>([]);
   const [allRecords, setAllRecords] = useState<Record[]>([]);
+  const [paginatedRecords, setPaginatedRecords] = useState<Record[]>([]);
   const [editRecord, setEditRecord] = useState<Record | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
 
   const [page, setPage] = useState(1);
   const recordsPerPage = 7;
+
+  const events = allRecords.map((record) => ({
+    title: record.dishName,  // 料理名
+    start: record.date,       // 記録の日付
+    allDay: true,             // 終日イベントとして表示
+  }));
 
   //データの取得(Firebase)
   useEffect(() => {
@@ -31,6 +45,19 @@ export default function history() {
     fetchRecords();
   }, [sortOrder]);
 
+  // 並び順を変更する関数
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
+
+  //ページネーション用のデータの更新
+  useEffect(() => {
+    setPaginatedRecords(
+      allRecords.slice((page - 1) * recordsPerPage, page * recordsPerPage)
+    );
+  }, [allRecords, page]);
+  const totalPages = Math.ceil(allRecords.length / recordsPerPage);
+
   // データを日付順に並べ替える関数
   const sortRecords = (records: any[], order: "asc" | "desc") => {
     return [...records].sort((a, b) => {
@@ -39,19 +66,6 @@ export default function history() {
       return order === "asc" ? dateA - dateB : dateB - dateA;
     });
   };
-
-  // 並び順を変更する関数
-  const toggleSortOrder = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-  };
-
-  //ページネーション用のデータの更新
-  useEffect(() => {
-    setRecords(
-      allRecords.slice((page - 1) * recordsPerPage, page * recordsPerPage)
-    );
-  }, [allRecords, page]);
-  const totalPages = Math.ceil(allRecords.length / recordsPerPage);
 
   //編集モーダルを開く
   const handleEdit = (record: Record) => {
@@ -95,12 +109,20 @@ export default function history() {
   return (
     <div className="m-0 flex flex-col items-center justify-center min-w-[320px] min-h-screen">
       <Header />
+
       <h2 className="mt-20 my-8"> ごはんの記録</h2>
+      <button
+          onClick={() => setViewMode(viewMode === "list" ? "calendar" : "list")}
+        className="mb-4 py-2 px-4 rounded-2xl bg-gray-100 hover:bg-gray-200"
+        >
+          {viewMode === "list" ? "カレンダー表示に切り替え" : "リスト表示に切り替え"}
+      </button>
+
       {isLoading ? (
         <p>読み込み中…</p>
-      ) : records.length === 0 ? (
+      ) : paginatedRecords.length === 0 ? (
         <p>記録がありません</p>
-      ) : (
+      ) : viewMode === "list" ? (
         <table className="w-[95%] sm:w-[70%] mb-5">
           <thead>
             <tr className="[&>th]:sm:h-10 text-left">
@@ -117,7 +139,7 @@ export default function history() {
             </tr>
           </thead>
           <tbody>
-            {records.map((record, index) => (
+            {paginatedRecords.map((record, index) => (
               <tr
                 key={index}
                 className="text-sm sm:text-base [&>td]:sm:h-8 p-4 text-left border-t-[1px] border-t-dotted border-violet-300"
@@ -145,10 +167,28 @@ export default function history() {
             ))}
           </tbody>
         </table>
+          ) : (
+          <div className="w-full sm:w-[70%]">
+            <FullCalendar
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            events={events}
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek",
+            }}
+            eventContent={(eventInfo) => (
+              <div className="text-sm bg-blue-100 text-blue-800 rounded p-1">
+                {eventInfo.event.title}
+              </div>
+            )}
+          /></div>
       )}
 
       {/* ページネーション */}
-      {totalPages > 1 && (
+      {viewMode === "list" ?(
+      totalPages > 1 && (
         <div>
           <button
             hidden={page === 1}
@@ -168,7 +208,7 @@ export default function history() {
             Next
           </button>
         </div>
-      )}
+      )):""}
 
       <Link href="/">
         <button className="mt-8 mx-4 py-3 px-5 rounded-2xl bg-gray-100 hover:bg-gray-200">
