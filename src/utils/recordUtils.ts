@@ -1,5 +1,5 @@
 export type Record = {
-  id: string; // Firestore の ID
+  id?: string; // Firestore の ID
   date: string;
   dishName: string;
   note: string;
