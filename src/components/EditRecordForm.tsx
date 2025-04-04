@@ -50,6 +50,22 @@ export default function EditRecordForm({
             />
           </label>
           <label className="flex justify-between  items-center gap-4 my-1">
+            ジャンル
+            <select
+              value={editRecord.category}
+              onChange={(e) =>
+                setEditRecord({ ...editRecord, category: e.target.value })
+              }
+              className="ml-4 p-2 border rounded-lg w-3/4"
+              required
+            >
+              <option value="和食">和食</option>
+              <option value="洋食">洋食</option>
+              <option value="中華">中華</option>
+              <option value="その他">その他</option>
+            </select>
+          </label>
+          <label className="flex justify-between  items-center gap-4 my-1">
             メモ
             <textarea
               value={editRecord.note}

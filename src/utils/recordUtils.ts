@@ -3,6 +3,7 @@ export type Record = {
   date: string;
   dishName: string;
   note: string;
+  category: string;
 };
 
 //登録処理(Create)(Firestore)

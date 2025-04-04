@@ -8,6 +8,7 @@ export default function record() {
   const [date, setDate] = useState("");
   const [dishName, setDishName] = useState("");
   const [note, setNote] = useState("");
+  const [category, setCategory] = useState("");
 
   // フォーム送信時の処理
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,12 +18,13 @@ export default function record() {
       alert("日付と料理名は必須です");
       return;
     } else {
-      const newRecord = { date, dishName, note };
+      const newRecord = { date, dishName, note, category };
       createRecord(newRecord);
 
       setDate("");
       setDishName("");
       setNote("");
+      setCategory("");
       alert("ごはんを記録しました");
     }
   };
@@ -51,6 +53,20 @@ export default function record() {
             required
             className="p-2 border rounded-lg  w-3/4"
           />
+        </label>
+        <label className="flex justify-between items-center gap-4 my-1">
+          ジャンル
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+            className="p-2 border rounded-lg  w-3/4"
+          >
+            <option value="和食">和食</option>
+            <option value="洋食">洋食</option>
+            <option value="中華">中華</option>
+            <option value="その他">その他</option>
+          </select>
         </label>
         <label className="flex justify-between items-center gap-4 my-1">
           メモ

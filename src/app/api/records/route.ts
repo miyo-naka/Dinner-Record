@@ -42,9 +42,9 @@ export async function POST(req: NextRequest) {
     const decodedToken = await auth.verifySessionCookie(sessionCookie, true);
     const userId = decodedToken.uid;
 
-    const { date, dishName, note } = await req.json();
+    const { date, dishName, note, category } = await req.json();
 
-    const newRecord = { date, dishName, note, createdAt: new Date() };
+    const newRecord = { date, dishName, note, category, createdAt: new Date() };
     const docRef = await db
       .collection("users")
       .doc(userId)
