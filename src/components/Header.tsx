@@ -11,6 +11,12 @@ export default function Header() {
         <img src="わたしのごはんロゴ.png" className="h-[30px] mr-2" />
         わたしのごはん
       </Link>
+
+      <Link href="/mypage">
+        <button className="absolute top-0 right-[120px] m-3 p-3 rounded-2xl bg-gray-100 hover:bg-gray-200">
+          Mypage
+        </button>
+      </Link>
       <LogoutButton />
     </div>
   );
