@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
-  const protectedRoutes = ["/", "/history", "/record"]; //ログインが必要なページ
+  const protectedRoutes = ["/", "/history", "/record", "/mypage"]; //ログインが必要なページ
   const { pathname } = req.nextUrl;
   const sessionCookie = req.cookies.get("__session")?.value;
 
@@ -37,5 +37,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/history", "/record"], // 適用するページ
+  matcher: ["/", "/history", "/record", "/mypage"], // 適用するページ
 };
