@@ -8,16 +8,19 @@
 
 ＜トップページ＞<br>
 「記録する」または「今までのごはん」のボタン
-<kbd><img src="https://github.com/user-attachments/assets/8830dfce-c834-4e9d-ad0d-31b5f00b39b6" width=60%></kbd><br><br>
+<kbd><img src="https://github.com/user-attachments/assets/c31c6ffb-a6cc-4aa1-8386-be56db26305b" width=60%></kbd><br><br>
 
 ＜記録ページ＞<br>
 日付、料理名、メモを記入して記録するページ
-<kbd><img src="https://github.com/user-attachments/assets/b71a76c1-2660-4881-a838-017d6b2dcfa3" width=60%></kbd><br><br>
+<kbd><img src="https://github.com/user-attachments/assets/aa8dce40-0605-4ebe-a3c1-298d7e48b43c" width=60%></kbd><br><br>
 
 ＜今までのごはん＞<br>
-記録したごはんを日付順で一覧表示
+記録したごはんを日付順で一覧表示、日付ソート機能、ジャンル絞り込み機能
 編集・削除が可能
-<kbd><img src="https://github.com/user-attachments/assets/85c24938-7970-4eca-a76a-b5e8ae11f0bd" width=60%></kbd><br><br><kbd><img src="https://github.com/user-attachments/assets/909bb968-eaa3-419a-9496-9c0cd0cce0c2" width=60%></kbd><br><br>
+<kbd><img src="https://github.com/user-attachments/assets/56ce1f3c-1f11-4772-ba57-3f1320203796" width=60%></kbd><br><br><kbd><img src="https://github.com/user-attachments/assets/64762889-d110-42c9-b93d-a1a1abae230e" width=60%></kbd><br><br>
+カレンダー表示にも対応
+<kbd><img src="https://github.com/user-attachments/assets/48ee192a-d7b9-4d6d-b8db-614872b7861c" width=60%></kbd><br><br>
+
 
 ## URL
 
@@ -35,6 +38,9 @@ https://github.com/miyo-naka/Dinner-Record
 - ログイン・ユーザー登録
 - 記録作成
 - 記録一覧表示
+- カレンダー表示切替
+- 日付ソート機能
+- カテゴリーによる絞り込み機能
 - 記録編集
 - 記録削除
   <br><br>
@@ -47,6 +53,14 @@ https://github.com/miyo-naka/Dinner-Record
   <br><br>
 
 ## Getting Started
+
+### 1. リポジトリのクローン
+```bash
+git clone リポジトリのURL プロジェクト名
+cd プロジェクト名
+```
+
+### 2. 環境構築
 サーバーの起動:
 ```bash
 npm run dev
